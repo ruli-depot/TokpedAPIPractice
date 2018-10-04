@@ -24,18 +24,18 @@ func getAllType(indexType string) (map[string]interface{}, error) {
 	)
 	if err != nil {
 		log.Println("loc : product")
-		log.Println("fn : getAllProduct")
+		log.Println("fn : getAllType")
 		log.Println("error 1 : ", err.Error())
 		return errResult, err
 	}
 	// ------------------------------
 
 	// do some search
-	esSearch, err := es.Search().Index("product").Timeout("5s").Do(context.Background()) // with timeout
+	esSearch, err := es.Search().Index("product").Type(indexType).Timeout("5s").Do(context.Background()) // with timeout
 	// esSearch, err := es.Search().Index("dummy").Do(context.Background())
 	if err != nil {
 		log.Println("loc : product")
-		log.Println("fn : getAllProduct")
+		log.Println("fn : getAllType")
 		log.Println("error 2 : ", err.Error())
 		return errResult, err
 	}
@@ -45,7 +45,7 @@ func getAllType(indexType string) (map[string]interface{}, error) {
 	byt, err := json.Marshal(esSearch)
 	if err != nil {
 		log.Println("loc : product")
-		log.Println("fn : getAllProduct")
+		log.Println("fn : getAllType")
 		log.Println("error 3 : ", err.Error())
 		return errResult, err
 	}
@@ -54,7 +54,7 @@ func getAllType(indexType string) (map[string]interface{}, error) {
 	err = json.Unmarshal(byt, &parsed)
 	if err != nil {
 		log.Println("loc : product")
-		log.Println("fn : getAllProduct")
+		log.Println("fn : getAllType")
 		log.Println("error 4 : ", err.Error())
 		return errResult, err
 	}
